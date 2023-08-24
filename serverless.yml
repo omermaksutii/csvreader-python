@@ -1,0 +1,55 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: python-hello-world
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+
+plugins:
+  - serverless-offline
+  - serverless-python-requirements
+package:
+  patterns:
+    - '!node_modules/**'
+    - '!venv/**'
+    - '!**/__pycache__*'
+  individually: true
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /hello/world
+          method: post
+  uploadcsv:
+    handler: src/api/v1/upload.lambda_handler
+    events:
+      - httpApi:
+          path: /api/v1/upload
+          method: post
+  listcsv:
+    handler: src/api/v1/listcsv.lambda_handler
+    events:
+      - httpApi:
+          path: /api/v1/listcsv
+          method: get
+  getcsvheader:
+    handler: src/api/v1/getcsvheader.lambda_handler
+    events:
+      - httpApi:
+          path: /api/v1/getcsvheader
+          method: get

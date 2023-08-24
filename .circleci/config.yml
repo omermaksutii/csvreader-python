@@ -1,0 +1,60 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  deploy-service:
+    docker:
+      - image: cimg/python:3.8-node
+    parameters:
+      stage_name:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo npm i -g serverless
+
+      # deploy app
+      - run:
+          name: Deploy application
+          command: sls deploy -s << parameters.stage_name >>
+
+      - run: python --version
+      - run: node --version
+
+
+
+workflows:
+  build-deploy:
+    jobs:
+      # deploys to qa
+      - deploy-service:
+          # Deploy QA <repo_name>
+          name: Deploy QA <Boiler plate>
+          stage_name: qa
+          context: Development
+          filters:
+            branches:
+              only: qa
+      # deploys to staging
+      - deploy-service:
+          # Deploy Stage <repo_name>
+          name:  Deploy Staging <Boiler plate>
+          stage_name: staging
+          context: Staging
+          filters:
+            branches:
+              only: staging
+      # master branch deploys to the 'prod' stage
+      - deploy-service:
+          # Deploy Prod <repo_name>
+          name:  Deploy Prod <Boiler plate>
+          stage_name: prod
+          context: Production
+          filters:
+            branches:
+              only: master

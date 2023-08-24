@@ -1,0 +1,23 @@
+{
+  "name": "python-serverless-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/attributy/python-serverless-boilerplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/attributy/python-serverless-boilerplate/issues"
+  },
+  "homepage": "https://github.com/attributy/python-serverless-boilerplate#readme",
+  "devDependencies": {
+    "serverless-offline": "^12.0.4",
+    "serverless-python-requirements": "^6.0.0"
+  }
+}
